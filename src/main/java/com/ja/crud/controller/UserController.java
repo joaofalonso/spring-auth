@@ -19,7 +19,7 @@ public class UserController {
         this.customUserDetailService = customUserDetailService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<?> createUser(@RequestBody CreateCustomUserDTO createCustomUser){
         CustomUser user = this.customUserDetailService.createUser(createCustomUser);
         return ResponseEntity.ok(user);

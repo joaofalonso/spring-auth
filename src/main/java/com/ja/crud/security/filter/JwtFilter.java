@@ -1,12 +1,11 @@
-package com.ja.crud.filter;
+package com.ja.crud.security.filter;
 
-import com.ja.crud.infra.jwt.JwtUtil;
 import com.ja.crud.security.CustomUserDetailService;
+import com.ja.crud.security.jwt.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.annotations.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String authorizationHeader = request.getHeader("Authorization");
         if(authorizationHeader != null && authorizationHeader.contains("Bearer ")){
             String token = authorizationHeader.replaceAll("Bearer ", "");
+            jwt.isValidToken(token);
             String userName = jwt.subjectFromToken(token);
             if(userName != null &&
                     SecurityContextHolder.getContext().getAuthentication() == null){

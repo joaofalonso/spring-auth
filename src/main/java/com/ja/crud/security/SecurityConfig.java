@@ -1,6 +1,6 @@
 package com.ja.crud.security;
 
-import com.ja.crud.filter.JwtFilter;
+import com.ja.crud.security.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

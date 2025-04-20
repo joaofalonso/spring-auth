@@ -2,7 +2,7 @@ package com.ja.crud.security;
 
 import com.ja.crud.dto.request.CreateCustomUserDTO;
 import com.ja.crud.dto.request.LoginRequest;
-import com.ja.crud.infra.jwt.JwtUtil;
+import com.ja.crud.security.jwt.JwtUtil;
 import com.ja.crud.model.CustomUser;
 import com.ja.crud.repository.CustomUserRepository;
 import org.slf4j.Logger;
