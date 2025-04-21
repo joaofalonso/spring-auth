@@ -1,7 +1,7 @@
 package com.ja.crud.controller;
 
 
-import com.ja.crud.dto.DeleteCustomUserDTO;
+import com.ja.crud.dto.request.DeleteCustomUserDTO;
 import com.ja.crud.dto.request.CreateCustomUserDTO;
 import com.ja.crud.model.CustomUser;
 import com.ja.crud.security.CustomUserDetailService;
@@ -28,7 +28,6 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<?> deleteUser(@RequestBody DeleteCustomUserDTO deleteUser){
         boolean userRemoved = this.customUserDetailService.deleteUser(deleteUser.uuid());
-//        if(userRemoved)
         return ResponseEntity.noContent().build();
     }
 

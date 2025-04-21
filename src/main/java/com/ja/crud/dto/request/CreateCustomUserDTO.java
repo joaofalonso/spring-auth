@@ -1,4 +1,6 @@
 package com.ja.crud.dto.request;
 
-public record CreateCustomUserDTO(String email, String password) {
+import java.util.List;
+
+public record CreateCustomUserDTO(String email, String password, List<String> roles) {
 }

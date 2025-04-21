@@ -4,6 +4,7 @@ package com.ja.crud.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ja.crud.model.CustomAuthority;
 import com.ja.crud.model.CustomUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtil {
@@ -33,6 +35,7 @@ public class JwtUtil {
                 .withIssuedAt(Instant.now())
                 .withExpiresAt(expiredAt)
                 .withSubject(customUser.getUserName())
+                .withClaim("roles", customUser.getAuthorities().stream().map(CustomAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
     }
 

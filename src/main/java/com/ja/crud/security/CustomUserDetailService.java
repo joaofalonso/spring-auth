@@ -43,7 +43,6 @@ public class CustomUserDetailService implements UserDetailsService {
             return User.builder()
                     .username(byUserName.getUserName())
                     .password(byUserName.getPassword())
-                    .roles("admin")
                     .build();
         }else return null;
 
@@ -62,7 +61,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if(userDetails != null)
             throw new IllegalArgumentException();
         CustomUser customUser = new CustomUser(createCustomUser.email(), this.passwordEncoder.encode(createCustomUser.password()));
-
+        createCustomUser.roles().forEach(customUser::addRole);
         return this.customUserRepository.save(customUser);
     }
 

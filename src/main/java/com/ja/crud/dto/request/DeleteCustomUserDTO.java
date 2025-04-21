@@ -1,4 +1,4 @@
-package com.ja.crud.dto;
+package com.ja.crud.dto.request;
 
 import java.util.UUID;
 
