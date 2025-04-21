@@ -1,10 +1,8 @@
 package com.ja.crud.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +15,7 @@ public class CustomUser {
     private String userName;
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CustomAuthority> authorities;
 
     public CustomUser(){
@@ -28,6 +26,7 @@ public class CustomUser {
         this.id = UUID.randomUUID();
         this.userName = login;
         this.password = password;
+        this.authorities = new ArrayList<CustomAuthority>();
     }
 
     public UUID getId() {

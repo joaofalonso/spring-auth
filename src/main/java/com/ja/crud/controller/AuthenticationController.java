@@ -15,7 +15,7 @@ public class AuthenticationController {
     @Autowired
     private CustomUserDetailService customUserDetailService;
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         String login = this.customUserDetailService.login(loginRequest);
         return ResponseEntity.ok(login);
