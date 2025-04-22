@@ -51,7 +51,7 @@ public class SecurityConfig {
                 {
                     authorize.requestMatchers(HttpMethod.DELETE, "/user/**").hasAuthority("admin");
                     authorize.requestMatchers(HttpMethod.POST, "/user/**").permitAll();
-                    authorize.requestMatchers("/auth/login").permitAll();
+                    authorize.requestMatchers("/auth").permitAll();
                     authorize.requestMatchers("/home").permitAll();
                     authorize.requestMatchers("/swagger-ui/**").permitAll();
                     authorize.requestMatchers("/v3/api-docs/**").permitAll();
