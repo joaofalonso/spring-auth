@@ -17,21 +17,18 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
     private CustomUserRepository customUserRepository;
 
     private BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 
-    private JwtUtil jwt;
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailServiceImpl.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailService.class);
-
-    public CustomUserDetailService(CustomUserRepository customUserRepository,
-    JwtUtil jwt){
+    public UserDetailServiceImpl(CustomUserRepository customUserRepository){
         logger.info("CustomUserDetailService constructor...");
         this.customUserRepository = customUserRepository;
-        this.jwt = jwt;
+
     }
 
     @Override
@@ -48,12 +45,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     }
 
-    public String login(LoginRequest loginRequest) {
+    public boolean login(LoginRequest loginRequest) {
         CustomUser byUserName = this.customUserRepository.findByUserName(loginRequest.userName());
-        boolean matches = passwordEncoder.matches( loginRequest.password(),byUserName.getPassword());
-        if (matches)
-            return this.jwt.createToken(byUserName);
-        throw new IllegalArgumentException();
+        return passwordEncoder.matches(loginRequest.password(),byUserName.getPassword());
+
     }
 
     public CustomUser createUser(CreateCustomUserDTO createCustomUser) {
