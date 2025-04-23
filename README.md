@@ -61,18 +61,17 @@ API will be available at: `http://localhost:8080`
 ### Authentication
 
 - **Register:**  
-  `POST /api/auth/register`
+  `POST /api/user`
 
   ```json
   {
-    "name": "name",
     "email": "name.email@example.com",
     "password": "supersecret"
   }
   ```
 
 - **Login:**  
-  `POST /api/auth/login`
+  `POST /api/auth`
 
   ```json
   {
