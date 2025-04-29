@@ -6,6 +6,10 @@ import com.ja.crud.dto.request.CreateCustomUserDTO;
 import com.ja.crud.model.CustomUser;
 import com.ja.crud.security.UserDetailServiceImpl;
 import com.ja.crud.security.filter.JwtFilter;
+import com.ja.crud.security.jwt.JwtUtil;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -30,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = {UserController.class})
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 public class UserControllerTest {
 
     @Autowired
@@ -40,22 +44,21 @@ public class UserControllerTest {
     private UserDetailServiceImpl mockedUserDetailSvc;
 
     @MockitoBean
-    private JwtFilter jwtFilter;
-
+    private JwtUtil mockedJwtUtil;
     @Test
-    @WithMockUser
     public void givenAValidUserRequestWhenPostShouldReturn201() throws Exception {
 
         CreateCustomUserDTO createUsetDto = new CreateCustomUserDTO("user@email.com", "supersecret");
-
+        String tokenValue = "JWTTOKEN";
+        
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
         String requestBody = objectMapper.writeValueAsString(createUsetDto);
 
-        when(this.mockedUserDetailSvc.createUser(createUsetDto)).thenReturn(new CustomUser(createUsetDto.email(), ""));
-        doNothing().when(this.jwtFilter).doFilterInternal(any(),any(),any());
-
+        CustomUser user = new CustomUser(createUsetDto.email(), "");
+        when(mockedJwtUtil.subjectFromToken(any())).thenReturn(null);
         this.mockMvc.perform(post("/user")
+                        .header("Authorization", "Bearer " + tokenValue)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.ALL)
                         .characterEncoding(StandardCharsets.UTF_8)
