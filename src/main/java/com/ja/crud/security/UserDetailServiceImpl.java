@@ -56,7 +56,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if(userDetails != null)
             throw new IllegalArgumentException();
         CustomUser customUser = new CustomUser(createCustomUser.email(), this.passwordEncoder.encode(createCustomUser.password()));
-        createCustomUser.roles().forEach(customUser::addRole);
+        customUser.addRole("USER");
         return this.customUserRepository.save(customUser);
     }
 
